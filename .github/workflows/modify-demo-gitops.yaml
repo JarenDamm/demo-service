@@ -16,7 +16,7 @@ jobs:
         run: |
           git clone https://${REPO_TOKEN}@github.com/JarenDamm/demo-gitops.git .
           git config --global user.email "<>"
-          git config --global user.name "<>"
+          git config --global user.name ${{ github.actor }}
         env:
           REPO_TOKEN: ${{ secrets.AUTOMATION_PAT }}
       
