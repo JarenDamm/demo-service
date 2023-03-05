@@ -1,0 +1,39 @@
+name: Update Image tag
+
+on:
+  workflow_dispatch:
+    inputs:
+      env:
+        description: 'Test Update'
+        required: true
+
+jobs:
+  modifyFile:
+    name: Update Environment Yaml File with New values
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone GitOps Repo
+        run: |
+          git clone https://${REPO_TOKEN}@github.com/JarenDamm/demo-gitops.git
+          git config --global user.email "<>"
+          git config --global user.name ${{ secrets.AUTOMATION_USER }}
+        env:
+          REPO_TOKEN: ${{ secrets.AUTOMATION_PAT }}
+      
+      - name: Setup Change
+        run: |
+          cd my-service/${{ github.event.inputs.env}}
+      
+      - name: Modify values
+        uses: mikefarah/yq@master
+        with:
+          cmd: yq -i '.imageTag = "xyz987"' 'values.yaml'
+      
+      - name: Commit and Push
+        run: |
+          git add .
+          git commit -m 'Updated Image Tag for ${{ github.event.inputs.env}}'
+          git push origin main
+
+
+
