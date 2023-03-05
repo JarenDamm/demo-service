@@ -14,7 +14,7 @@ jobs:
     steps:
       - name: Clone GitOps Repo
         run: |
-          git clone https://${REPO_TOKEN}@github.com/JarenDamm/demo-gitops.git
+          git clone https://${REPO_TOKEN}@github.com/JarenDamm/demo-gitops.git .
           git config --global user.email "<>"
           git config --global user.name "<>"
         env:
