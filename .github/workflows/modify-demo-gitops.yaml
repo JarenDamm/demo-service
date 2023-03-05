@@ -28,7 +28,7 @@ jobs:
       - name: Modify values
         uses: mikefarah/yq@master
         with:
-          cmd: yq -i '.imageTag = "xyz987"' 'values.yaml'
+          cmd: yq -i '.imageTag = "xyz987"' 'my-service/development/values.yaml'
       
       - name: Commit and Push
         run: |
