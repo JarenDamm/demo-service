@@ -22,8 +22,8 @@ jobs:
       
       - name: Setup Change
         run: |
-          ls
           cd my-service/${{ github.event.inputs.env}}
+          ls
       
       - name: Modify values
         uses: mikefarah/yq@master
