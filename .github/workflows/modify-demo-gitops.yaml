@@ -3,7 +3,7 @@ name: Update Image tag
 on:
   workflow_dispatch:
     inputs:
-      env:
+      newTag:
         description: 'Test Update'
         required: true
 
@@ -20,20 +20,22 @@ jobs:
         env:
           REPO_TOKEN: ${{ secrets.AUTOMATION_PAT }}
       
-      - name: Setup Change
-        run: |
-          cd my-service/${{ github.event.inputs.env}}
-          ls
+      # - name: Setup Change
+      #   run: |
+      #     cd my-service/${{ github.event.inputs.env}}
+      #     ls
       
       - name: Modify values
         uses: mikefarah/yq@master
         with:
-          cmd: yq -i '.imageTag = "xyz987"' 'my-service/development/values.yaml'
+          cmd: |
+            yq -i '.imageTag = "${{ github.event.inputs.newTag}}"' 'my-service/development/values.yaml'
+            yq -i '.imageTag = "${{ github.event.inputs.newTag}}:prod"' 'my-service/production/values.yaml'
       
       - name: Commit and Push
         run: |
           git add .
-          git commit -m 'Updated Image Tag for ${{ github.event.inputs.env}}'
+          git commit -m 'Updated Image Tag'
           git push origin main
 
 
