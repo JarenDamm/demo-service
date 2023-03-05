@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       newTag:
-        description: 'Test Update'
+        description: 'New Image Tag'
         required: true
 
 jobs:
